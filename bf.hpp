@@ -7,7 +7,7 @@
 
 constexpr int kMemSize = 1 << 16;
 
-const std::string kTokens = R"(<>>+-.,[])";
+const std::string kTokens = R"(<>+-.,[])";
 
 class BrainFuck {
  public:
