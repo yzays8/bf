@@ -9,9 +9,9 @@ constexpr int kMemSize = 1 << 16;
 
 const std::string kTokens = R"(<>+-.,[])";
 
-class BrainFuck {
+class Brainfuck {
  public:
-  BrainFuck();
+  Brainfuck();
   void Load(const std::string path);
   void Run();
 

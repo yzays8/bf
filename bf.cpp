@@ -3,10 +3,10 @@
 
 #include "bf.hpp"
 
-BrainFuck::BrainFuck() : code_buf_{}, mem_{0}, data_ptr_{0} {
+Brainfuck::Brainfuck() : code_buf_{}, mem_{0}, data_ptr_{0} {
 }
 
-void BrainFuck::Load(const std::string path) {
+void Brainfuck::Load(const std::string path) {
   std::ifstream ifs{path, std::ios::binary | std::ios::in};
   if (!ifs.is_open()) {
     std::cerr << "Failed to open file" << std::endl;
@@ -23,7 +23,7 @@ void BrainFuck::Load(const std::string path) {
   std::cout << "Loaded file" << std::endl;
 }
 
-void BrainFuck::Run() {
+void Brainfuck::Run() {
   for (auto inst_ptr = code_buf_.begin(); inst_ptr != code_buf_.end(); ++inst_ptr) {
     switch (*inst_ptr) {
       case '>':

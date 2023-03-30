@@ -2,7 +2,7 @@
 
 ## About
 
-A simple BrainF*ck interpreter.
+A simple Brainf*ck interpreter.
 
 ## Usage
 

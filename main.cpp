@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  auto bf = std::make_unique<BrainFuck>();
+  auto bf = std::make_unique<Brainfuck>();
   bf->Load(argv[1]);
   bf->Run();
 }
