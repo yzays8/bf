@@ -1,14 +1,14 @@
 # bf
 
-## About
+## Overview
 
 A simple Brainf*ck interpreter.
 
 ## Usage
 
 ```sh
-$ make
-$ ./main <file>
+make
+make run FILE=<file_path>
 ```
 
 ## Reference
