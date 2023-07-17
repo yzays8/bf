@@ -33,10 +33,20 @@ void Brainfuck::Run() {
   for (auto inst_ptr = code_buf_.begin(); inst_ptr != code_buf_.end(); ++inst_ptr) {
     switch (*inst_ptr) {
       case '>':
-        ++data_ptr_;
+        if (data_ptr_ == kMemSize - 1) {
+          // roll over the pointer
+          data_ptr_ = 0;
+        } else {
+          ++data_ptr_;
+        }
         break;
       case '<':
-        --data_ptr_;
+        if (data_ptr_ == 0) {
+          // roll over the pointer
+          data_ptr_ = kMemSize - 1;
+        } else {
+          --data_ptr_;
+        }
         break;
       case '+':
         mem_[data_ptr_]++;
