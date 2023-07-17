@@ -1,7 +1,7 @@
 CC = g++
 TARGET = main
 OBJS = main.o bf.o
-CXXFLAGS = -O2 -Wall
+CXXFLAGS = -O2 -Wall -Wextra -std=c++2b
 
 .PHONY: all
 all: $(TARGET)

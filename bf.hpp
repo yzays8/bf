@@ -12,7 +12,7 @@ const std::string kTokens = R"(<>+-.,[])";
 class Brainfuck {
  public:
   Brainfuck();
-  void Load(const std::string path);
+  bool Load(const std::string path);
   void Run();
 
  private:

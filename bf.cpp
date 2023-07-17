@@ -1,16 +1,20 @@
 #include <iostream>
+#include <filesystem>
 #include <fstream>
 
 #include "bf.hpp"
 
-Brainfuck::Brainfuck() : code_buf_{}, mem_{0}, data_ptr_{0} {
-}
+Brainfuck::Brainfuck() : code_buf_{}, mem_{}, data_ptr_{0} {}
 
-void Brainfuck::Load(const std::string path) {
+bool Brainfuck::Load(const std::string path) {
+  if (!std::filesystem::is_regular_file(path)) {
+    std::cerr << path << " is not a regular file" << std::endl;
+    return false;
+  }
   std::ifstream ifs{path, std::ios::binary | std::ios::in};
   if (!ifs.is_open()) {
     std::cerr << "Failed to open file" << std::endl;
-    std::exit(EXIT_FAILURE);
+    return false;
   }
 
   char data;
@@ -21,6 +25,8 @@ void Brainfuck::Load(const std::string path) {
     }
   }
   std::cout << "Loaded file" << std::endl;
+
+  return true;
 }
 
 void Brainfuck::Run() {
@@ -44,38 +50,36 @@ void Brainfuck::Run() {
       case ',':
         std::cin >> mem_[data_ptr_];
         break;
-      case '[':
+      case '[': {
         // deal with nested structure
-        {
-          if (mem_[data_ptr_] == 0) {
-            int depth = 1;
-            while (depth >= 1) {
-              ++inst_ptr;
-              if (*inst_ptr == '[') {
-                ++depth;
-              } else if (*inst_ptr == ']') {
-                --depth;
-              }
+        if (mem_[data_ptr_] == 0) {
+          int depth = 1;
+          while (depth >= 1) {
+            ++inst_ptr;
+            if (*inst_ptr == '[') {
+              ++depth;
+            } else if (*inst_ptr == ']') {
+              --depth;
             }
           }
         }
         break;
-      case ']':
+      }
+      case ']': {
         // deal with nested structure
-        {
-          if (mem_[data_ptr_] != 0) {
-            int depth = 1;
-            while (depth >= 1) {
-              --inst_ptr;
-              if (*inst_ptr == ']') {
-                ++depth;
-              } else if (*inst_ptr == '[') {
-                --depth;
-              }
+        if (mem_[data_ptr_] != 0) {
+          int depth = 1;
+          while (depth >= 1) {
+            --inst_ptr;
+            if (*inst_ptr == ']') {
+              ++depth;
+            } else if (*inst_ptr == '[') {
+              --depth;
             }
           }
         }
         break;
+      }
       default:
         std::cerr << "Not implemented: " << *inst_ptr << std::endl;
         std::exit(EXIT_FAILURE);
