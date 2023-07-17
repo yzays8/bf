@@ -1,17 +1,14 @@
-CC = g++
-TARGET = main
-OBJS = main.o bf.o
-CXXFLAGS = -O2 -Wall -Wextra -std=c++2b
+SRCDIR = src
+FILE_PATH = $(abspath $(if $(filter /%,$(FILE)),$(FILE),$(dir $(lastword $(MAKEFILE_LIST)))$(FILE)))
 
 .PHONY: all
-all: $(TARGET)
+all:
+	make all -C $(SRCDIR) --no-print-directory
 
 .PHONY: clean
 clean:
-	rm -rf *.o $(TARGET)
+	make clean -C $(SRCDIR) --no-print-directory
 
-$(TARGET): $(OBJS) Makefile
-	$(CC) $(OBJS) $(LIBS) $(LDFLAGS) -o $@
-
-%.o: %.cpp Makefile
-	$(CC) $(CXXFLAGS) -c $<
+.PHONY: run
+run:
+	make run FILE=$(FILE_PATH) -C $(SRCDIR) --no-print-directory
